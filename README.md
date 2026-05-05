@@ -3,7 +3,7 @@ Usemos este readme para dejar los requisitos del TP
 
 Dígito Verificador -> al menos en 2 tablas (2da entrega)
 
-## Entrega 1 -> Clase 9 aprox
+## Entrega 1 -> 26/5 aprox
 ### Requisitos funcionales
 Mapa de navegación, Login & Bitácora
 #### Login 
