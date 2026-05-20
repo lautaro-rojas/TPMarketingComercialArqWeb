@@ -51,3 +51,40 @@ Acá documentamos los Casos de Uso de login + bitácora
 
 > [!WARNING]
 > El profe Necesita que en el TP haya un RegularExpressionValidation (nos dio una hoja con la explicación).
+
+## Usuarios del sistema
+
+Usuario: Lauta
+Contraseña: 1234
+Rol: Administrador
+
+Usuario: MaxV
+Contraseña: 1234
+Rol: SinPermisos
+
+Usuario: Nano
+Contraseña: 1234
+Rol: Cliente
+
+Usuario: Checo
+Contraseña: 1234
+Rol: Seguridad
+
+
+## Roles y permisos
+
+- Administrador
+  - GestionarPermisosDeUsuarios
+  - GestionarPermisos
+  - GestionarBitacoraEventos
+  - GestionarBackup
+  - ABMUsuarios
+- SinPermisos
+  - SinPermisos
+- Cliente
+  - Comprar
+- Seguridad
+  - GestionarPermisosDeUsuarios
+  - GestionarPermisos
+  - GestionarBitacoraEventos
+  - GestionarBackup
