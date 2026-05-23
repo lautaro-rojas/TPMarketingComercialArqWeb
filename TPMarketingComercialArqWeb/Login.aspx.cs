@@ -55,9 +55,15 @@ namespace TPMarketingComercialArqWeb
                                        .Select(r => r.Nombre)
                                        .ToList();
                     string rolTexto = roles.Any() ? string.Join(", ", roles) : "Sin rol";
-                    string mensaje = $"Usuario {usuario.Nombre} ingresado en el sistema con el rol: {rolTexto}";
-                    string script = $"alert('{mensaje}'); window.location.href = '/';";
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", script, true);
+
+                    // Mostrar mensaje en la página en lugar del alert
+                    pnlExito.Visible = true;
+                    lblExito.Text = $"✅ Bienvenido, {usuario.Nombre}! Rol: {rolTexto}. Redirigiendo...";
+
+                    // Redirigir después de 2 segundos
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "redir",
+                        "setTimeout(function(){ window.location.href = '/Default.aspx'; }, 1000);", true);
+
                     bllbitacoraeventos.GuardarBitacoraEvento(new BE_BITACORA_EVENTOS(
                         BE_SESION.ObtenerInstancia.Usuario, DateTime.Now, "Log In"));
                 }
