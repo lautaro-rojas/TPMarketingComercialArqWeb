@@ -1,25 +1,26 @@
 ﻿using BE;
 using BE.BITACORAYCAMBIOS;
+using BE.PERMISOS;
 using BLL;
 using BLL.BITACORAYCAMBIOS;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace TPMarketingComercialArqWeb
 {
-    public partial class Bitacora : System.Web.UI.Page
+    public partial class Bitacora : PaginaProtegida
     {
-        BLL_BITACORA_EVENTOS bllbitacoraeventos = new BLL_BITACORA_EVENTOS();
+        protected override BE_PERMISO_TIPO_ENUM PermisoRequerido
+            => BE_PERMISO_TIPO_ENUM.GestionarBitacoraEventos;
 
+        BLL_BITACORA_EVENTOS bllbitacoraeventos = new BLL_BITACORA_EVENTOS();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                bllbitacoraeventos.GuardarBitacoraEvento(new BE_BITACORA_EVENTOS(BE_SESION.ObtenerInstancia.Usuario, DateTime.Now, $"Abrió Bitacora"));
+                bllbitacoraeventos.GuardarBitacoraEvento(
+                    new BE_BITACORA_EVENTOS(BE_SESION.ObtenerInstancia.Usuario, DateTime.Now, "Abrió Bitacora"));
                 LlenarGrilla();
             }
         }
@@ -31,11 +32,9 @@ namespace TPMarketingComercialArqWeb
 
         private void LlenarGrilla()
         {
-            // Orden descendente para que la primera página muestre los últimos registros
             var data = bllbitacoraeventos.ListarBitacoraEvento()
                         .OrderByDescending(b => b.Fecha)
                         .ToList();
-
             gvBitacora.DataSource = data;
             gvBitacora.DataBind();
         }
@@ -44,6 +43,11 @@ namespace TPMarketingComercialArqWeb
         {
             gvBitacora.PageIndex = e.NewPageIndex;
             LlenarGrilla();
+        }
+
+        protected void gvBitacora_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

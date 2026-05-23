@@ -4,14 +4,14 @@
     <main>
         <section class="row" aria-labelledby="aspnetTitle">
             <h1 id="aspnetTitle">Bitacora</h1>
-            <p class="lead">Consulte los eventos del sistema.</p>
+            <p class="lead">Eventos del sistema:</p>
         </section>
 
         <div class="row">
             <div class="col-md-12">
                 <asp:GridView ID="gvBitacora" runat="server" CssClass="table table-striped"
     AutoGenerateColumns="False" DataKeyNames="Id"
-    AllowPaging="True" PageSize="20" OnPageIndexChanging="gvBitacora_PageIndexChanging">
+    AllowPaging="True" PageSize="20" OnPageIndexChanging="gvBitacora_PageIndexChanging" OnSelectedIndexChanged="gvBitacora_SelectedIndexChanged">
     <PagerSettings Mode="Numeric" PageButtonCount="5" />
     <Columns>
         <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" />

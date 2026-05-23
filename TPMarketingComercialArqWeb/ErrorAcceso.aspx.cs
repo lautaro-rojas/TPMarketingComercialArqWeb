@@ -1,5 +1,4 @@
-﻿using BE;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,13 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace TPMarketingComercialArqWeb
 {
-    public partial class Comprar : PaginaProtegida
+    public partial class ErrorAcceso : System.Web.UI.Page
     {
-        protected override BE_PERMISO_TIPO_ENUM PermisoRequerido
-            => BE_PERMISO_TIPO_ENUM.Comprar;
-
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
     }
 }

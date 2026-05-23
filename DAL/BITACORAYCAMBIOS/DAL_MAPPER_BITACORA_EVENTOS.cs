@@ -21,16 +21,13 @@ namespace DAL.BITACORAYCAMBIOS
 
         public override int Alta(BE_BITACORA_EVENTOS entidad)
         {
+            acceso.AbrirConexion(); // ← abrir acá
             List<SqlParameter> parametros = new List<SqlParameter>();
-            SqlParameter p = acceso.CrearParametro("@idusuario", entidad.Usuario.Id);
-            parametros.Add(p);
-            p = acceso.CrearParametro("@fecha", entidad.Fecha);
-            parametros.Add(p);
-            p = acceso.CrearParametro("@accion", entidad.Accion);
-            parametros.Add(p);
-
+            parametros.Add(acceso.CrearParametro("@idusuario", entidad.Usuario.Id));
+            parametros.Add(acceso.CrearParametro("@fecha", entidad.Fecha));
+            parametros.Add(acceso.CrearParametro("@accion", entidad.Accion));
             int res = acceso.Escribir("BITACORAEVENTOS_INSERTAR", parametros);
-            //INSERT INTO BITACORAEVENTOS VALUES (@idusuario, @fecha, @accion)
+            acceso.CerrarConexion(); // ← cerrar acá
             return res;
         }
 
@@ -51,14 +48,16 @@ namespace DAL.BITACORAYCAMBIOS
 
         public override List<BE_BITACORA_EVENTOS> TraerTodos()
         {
+            acceso.AbrirConexion();
             List<BE_BITACORA_EVENTOS> bitacora = new List<BE_BITACORA_EVENTOS>();
             DataTable tabla = acceso.Leer("BITACORAEVENTOS_LISTAR", null);
-            //SELECT * FROM BITACORAEVENTOS
             foreach (DataRow dr in tabla.Rows)
             {
                 bitacora.Add(Convertir(dr));
             }
+            acceso.CerrarConexion();
 
+            // LlenarUsuario va DESPUÉS de cerrar, abre su propia conexión
             foreach (var registro in bitacora)
             {
                 LlenarUsuario(registro);
@@ -78,12 +77,12 @@ namespace DAL.BITACORAYCAMBIOS
 
         private void LlenarUsuario(BE_BITACORA_EVENTOS entidad)
         {
+            acceso.AbrirConexion();
             List<SqlParameter> parametros = new List<SqlParameter>();
-            SqlParameter p = acceso.CrearParametro("@id", entidad.Usuario.Id);
-            parametros.Add(p);
-
+            parametros.Add(acceso.CrearParametro("@id", entidad.Usuario.Id));
             DataTable tabla = acceso.Leer("USUARIO_BUSCARID", parametros);
-            //SELECT * FROM USUARIO WHERE id = @id
+            acceso.CerrarConexion();
+
             foreach (DataRow dr in tabla.Rows)
             {
                 entidad.Usuario = dalusuario.BuscarConId(int.Parse(dr["id"].ToString()));
