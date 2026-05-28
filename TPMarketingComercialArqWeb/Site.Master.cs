@@ -30,6 +30,7 @@ namespace TPMarketingComercialArqWeb
             liUsuarios.Visible = false;
             liBitacora.Visible = false;
             liComprar.Visible = false;
+            liBackup.Visible = false;
 
             var sesion = BE_SESION.ObtenerInstancia;
             if (sesion != null && sesion.Logueado())
@@ -41,16 +42,18 @@ namespace TPMarketingComercialArqWeb
                 bool mostrarUsuarios = false;
                 bool mostrarBitacora = false;
                 bool mostrarComprar = false;
+                bool mostrarBackup = false;
 
                 if (roles.Contains("Administrador"))
                 {
-                    mostrarUsuarios = mostrarBitacora = mostrarComprar = true;
+                    mostrarUsuarios = mostrarBitacora = mostrarComprar = mostrarBackup = true;
                 }
                 else
                 {
                     if (roles.Contains("Seguridad"))
                     {
                         mostrarBitacora = true;
+                        mostrarBackup = true;
                     }
                     if (roles.Contains("Cliente"))
                     {
@@ -63,6 +66,7 @@ namespace TPMarketingComercialArqWeb
                 liUsuarios.Visible = mostrarUsuarios;
                 liBitacora.Visible = mostrarBitacora;
                 liComprar.Visible = mostrarComprar;
+                liBackup.Visible = mostrarBackup;
 
                 // Footer y cabeceras login/logout
                 string rolTexto = roles.Any() ? string.Join(", ", roles) : "Sin rol";

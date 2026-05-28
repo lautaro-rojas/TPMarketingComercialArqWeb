@@ -78,6 +78,15 @@ namespace TPMarketingComercialArqWeb
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liComprar;
 
         /// <summary>
+        /// Control liBackup.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liBackup;
+
+        /// <summary>
         /// Control MainContent.
         /// </summary>
         /// <remarks>

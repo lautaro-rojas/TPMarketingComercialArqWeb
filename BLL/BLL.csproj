@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BACKUP\BLL_BACKUP.cs" />
     <Compile Include="BITACORAYCAMBIOS\BLL_BITACORA_EVENTOS.cs" />
     <Compile Include="MULTIIDIOMA\BLL_IDIOMA.cs" />
     <Compile Include="BLL_USUARIO.cs" />

@@ -15,14 +15,18 @@ namespace DAL
 
         public void AbrirConexion()
         {
-            //String de conexion para la bd de casa
-            //conexion = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TpArqWeb;Integrated Security=SSPI");
+            //String de conexion para la bd de casa (Lau)
+            conexion = new SqlConnection("Data Source=PC-ESCRITORIO-L\\SQLEXPRESS;Initial Catalog=TpArqWeb;Integrated Security=SSPI");
 
             //String de conexion para la bd de la facu
             //conexion = new SqlConnection("Data Source=.;Initial Catalog=TpArqWeb;Integrated Security=SSPI");
-            conexion = new SqlConnection("Data Source=DESKTOP-Q714KGU\\SQLEXPRESS;Initial Catalog=TpArqWeb;Integrated Security=SSPI");
+
+            //String de conexion para la bd de alguien
+            //conexion = new SqlConnection("Data Source=DESKTOP-Q714KGU\\SQLEXPRESS;Initial Catalog=TpArqWeb;Integrated Security=SSPI");
+
             //String de conexion para el instalador (usando el App.config)
             //conexion = new SqlConnection(ConfigurationManager.AppSettings["ConnectionDatabase"]);
+
             conexion.Open();
         }
 

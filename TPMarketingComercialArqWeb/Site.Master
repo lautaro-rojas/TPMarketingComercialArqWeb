@@ -68,6 +68,9 @@
                         <li class="nav-item" id="liComprar" runat="server">
                             <a class="nav-link" runat="server" href="~/Comprar">Comprar</a>
                         </li>
+                        <li class="nav-item" id="liBackup" runat="server">
+                            <a class="nav-link" runat="server" href="~/Backup">Backup</a>
+                        </li>
                     </ul>
                 </div>
             </div>
