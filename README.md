@@ -70,7 +70,6 @@ Usuario: Checo
 Contraseña: 1234
 Rol: Seguridad
 
-
 ## Roles y permisos
 
 - Administrador
@@ -88,3 +87,7 @@ Rol: Seguridad
   - GestionarPermisos
   - GestionarBitacoraEventos
   - GestionarBackup
+
+## Mejoras
+
+- Verificar el stock de los productos antes de mostrar las tarjetas.
