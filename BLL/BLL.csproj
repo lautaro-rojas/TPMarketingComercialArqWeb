@@ -44,6 +44,7 @@
     <Compile Include="BACKUP\BLL_BACKUP.cs" />
     <Compile Include="BITACORAYCAMBIOS\BLL_BITACORA_EVENTOS.cs" />
     <Compile Include="BLL_PRODUCTO.cs" />
+    <Compile Include="DIGITOVERIFICADOR\BLL_DIGITOVERIFICADOR.cs" />
     <Compile Include="MULTIIDIOMA\BLL_IDIOMA.cs" />
     <Compile Include="BLL_USUARIO.cs" />
     <Compile Include="PERMISOS\BLL_PERMISO.cs" />
