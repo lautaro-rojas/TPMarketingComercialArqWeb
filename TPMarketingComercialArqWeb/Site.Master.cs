@@ -3,6 +3,7 @@ using BE.BITACORAYCAMBIOS;
 using BE.PERMISOS;
 using BLL;
 using BLL.BITACORAYCAMBIOS;
+using BLL.DIGITOVERIFICADOR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,35 @@ namespace TPMarketingComercialArqWeb
                 lblSesion.Text = "Sesión no iniciada";
                 liLogin.Visible = true;
                 liLogout.Visible = false;
+                liBackup.Visible = false;
+            }
+
+            var dvMode = Session["DV_LockedMode"] as string;
+            if (!string.IsNullOrEmpty(dvMode))
+            {
+                // Bloqueo por inconsistencia
+                // Ocultar todo por defecto
+                liUsuarios.Visible = false;
+                liBitacora.Visible = false;
+                liComprar.Visible = false;
+                liLogin.Visible = false;
+
+                // Mostrar logout siempre
+                liLogout.Visible = true;
+
+                if (dvMode == "admin")
+                {
+                    // admin puede acceder a Backup (y logout)
+                    liBackup.Visible = true;
+                }
+                else
+                {
+                    // usuario no admin sólo logout
+                    liBackup.Visible = false;
+                }
+
+                // Opcional: mostrar footer con aviso (lblSesion ya muestra)
+                return;
             }
         }
 
@@ -93,6 +123,7 @@ namespace TPMarketingComercialArqWeb
             finally
             {
                 ActualizarInfoSesion();
+                Session["DV_LockedMode"] = string.Empty;
                 Response.Redirect("~/", true);
             }
         }

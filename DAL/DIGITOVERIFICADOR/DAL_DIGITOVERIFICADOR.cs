@@ -21,9 +21,10 @@ namespace DAL.DIGITOVERIFICADOR
             acceso.AbrirConexion();
         }
 
-        public int CalcularDVH(string nombretabla)
+        public int CalcularDVHTabla(string nombretabla)
         {
             /* 
+            DVH (Dígito Verificador Horizontal)
             Este dígito se calcula para cada fila de la tabla y se almacena en la misma fila
             Este método recorre cada fila de la tabla y concatena los valores de las columnas (excepto la columna DigitoHorizontal). 
             Luego, calcula el hash SHA256 de la cadena concatenada y actualiza la fila con el nuevo DigitoHorizontal.
@@ -52,9 +53,10 @@ namespace DAL.DIGITOVERIFICADOR
             return res;
         }
 
-        public int CalcularDVV(string nombretabla)
+        public int CalcularDVVTabla(string nombretabla)
         {
             /*
+            DVV (Dígito Verificador Vertical)
             Este dígito se calcula para toda la tabla y se almacena en una tabla separada
             Este método recorre cada fila de la tabla y concatena los valores de la columna DigitoHorizontal. 
             Luego, calcula el hash SHA256 de la cadena concatenada y devuelve el resultado
@@ -134,6 +136,58 @@ namespace DAL.DIGITOVERIFICADOR
             string digitovertical = dalencriptador.EncriptarSHA256(cadena.ToString());
 
             return digitovertical;
+        }
+
+        public IDictionary<string, List<int>> VerificarTodasTablasDetalle()
+        {
+            var resultado = new Dictionary<string, List<int>>();
+
+            // Obtener lista de tablas que tienen DVV registrado
+            var dtTablas = acceso.Leer("SELECT nombretabla FROM TABLA_DVV", null, false);
+            foreach (System.Data.DataRow row in dtTablas.Rows)
+            {
+                string nombretabla = row["nombretabla"].ToString();
+                // Leer filas de la tabla
+                var dt = acceso.Leer($"SELECT * FROM {nombretabla}", null, false);
+                var listaIdsInconsistentes = new List<int>();
+
+                if (dt.Rows.Count == 0)
+                {
+                    resultado[nombretabla] = listaIdsInconsistentes;
+                    continue;
+                }
+
+                string NombreCampo = "digitohorizontal";
+                // recorrer filas y calcular DVH por fila (misma lógica que CalcularDVH)
+                foreach (System.Data.DataRow dr in dt.Rows)
+                {
+                    var sb = new StringBuilder();
+                    foreach (System.Data.DataColumn col in dt.Columns)
+                    {
+                        if (!col.ColumnName.Equals(NombreCampo, StringComparison.OrdinalIgnoreCase))
+                        {
+                            var val = dr[col] ?? string.Empty;
+                            sb.Append(val.ToString());
+                        }
+                    }
+                    string dvhCalculado = dalencriptador.EncriptarSHA256(sb.ToString());
+                    string dvhAlmacenado = dr.Table.Columns.Contains(NombreCampo) ? dr[NombreCampo]?.ToString() ?? string.Empty : string.Empty;
+
+                    if (!string.Equals(dvhCalculado, dvhAlmacenado, StringComparison.Ordinal))
+                    {
+                        int id = 0;
+                        try { id = Convert.ToInt32(dr["id"]); } catch { id = -1; }
+                        listaIdsInconsistentes.Add(id);
+                    }
+                }
+
+                if (listaIdsInconsistentes.Any())
+                {
+                    resultado[nombretabla] = listaIdsInconsistentes;
+                }
+            }
+
+            return resultado;
         }
     }
 }

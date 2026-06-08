@@ -71,6 +71,15 @@
         color: #155724;
         font-weight: 600;
     }
+    .inconsistencia-msg{
+        background: #ffe1e0;
+        border: 1px solid #f40800;
+        border-radius: 8px;
+        padding: 14px 18px;
+        text-align: center;
+        color: #fff4f4;
+        font-weight: 600;
+    }
 </style>
 
 <main>
@@ -105,6 +114,10 @@
 
             <asp:Panel ID="pnlExito" runat="server" Visible="false" CssClass="exito-msg mt-3">
                 <asp:Label ID="lblExito" runat="server" />
+            </asp:Panel>
+
+            <asp:Panel ID="pnlInconsistencia" runat="server" Visible="false" CssClass="inconsistencia-msg mt-3">
+                <asp:Label ID="lblInconsistencia" runat="server" />
             </asp:Panel>
 
         </div>

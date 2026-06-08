@@ -19,7 +19,17 @@ namespace BLL.DIGITOVERIFICADOR
             return daldigitoverificador.VerificarDigito(nombretabla);
         }
 
-        public string CalcularDVH<T>(T objeto)
+        public int CalcularDVHTabla(string nombretabla)
+        {
+            return daldigitoverificador.CalcularDVHTabla(nombretabla);
+        }
+
+        public int CalcularDVVTabla(string nombretabla)
+        {
+            return daldigitoverificador.CalcularDVVTabla(nombretabla);
+        }
+
+        public string CalcularDVHObjeto<T>(T objeto)
         {
             StringBuilder cadena = new StringBuilder();
             PropertyInfo[] propiedades = typeof(T).GetProperties();
@@ -37,6 +47,11 @@ namespace BLL.DIGITOVERIFICADOR
             }
 
             return dalencriptador.EncriptarSHA256(cadena.ToString());
+        }
+
+        public IDictionary<string, List<int>> ObtenerInconsistencias()
+        {
+            return daldigitoverificador.VerificarTodasTablasDetalle();
         }
     }
 }
