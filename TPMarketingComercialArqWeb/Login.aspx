@@ -104,6 +104,16 @@
                     Display="Dynamic" CssClass="text-danger" runat="server" ValidationGroup="loginGroup" />
             </div>
 
+            <asp:RegularExpressionValidator 
+                ID="RegularExpressionValidator1" 
+                runat="server" 
+                ControlToValidate="txtPassword" 
+                ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$" 
+                ErrorMessage="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)." 
+                ForeColor="Red"
+                Display="Dynamic">
+            </asp:RegularExpressionValidator>
+
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" 
                 CssClass="text-danger mb-2" ValidationGroup="loginGroup" />
 

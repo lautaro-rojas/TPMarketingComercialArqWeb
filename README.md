@@ -42,11 +42,37 @@ Cuando se loguea alguien que NO es el Admin, le aparece el cartel de inconsisten
 
 Siempre al loguearse, no al cargar la página.
 
-#### Corregir
+#### Correxiones
 
-- Cosas de las contraseña
-  - Contraseña 8 caracteres letras may y min y caracter especial
-  - Bloquear el usuario desp del 3er intento incorrecto o hacer algo
+##### Contraseña
+
+8 caracteres letras may y min y caracter especial y un número.
+
+Se usó un RegularExpressionValidator:
+
+``` XML
+<asp:RegularExpressionValidator 
+    ID="revPassword" 
+    runat="server" 
+    ControlToValidate="txtPassword" 
+    ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$" 
+    ErrorMessage="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)." 
+    ForeColor="Red"
+    Display="Dynamic">
+</asp:RegularExpressionValidator>
+```
+
+- ^ : Indica el inicio de la línea de texto.
+- (?=.*[a-z]) : Verifica que exista al menos una letra minúscula (de la a a la z).
+- (?=.*[A-Z]) : Verifica que exista al menos una letra mayúscula (de la A a la Z).
+- (?=.*\d) : Verifica que exista al menos un número (dígito).
+- .{8,} : Establece que la longitud total debe ser de 8 caracteres o más (el punto significa "cualquier carácter").
+- $ : Indica el final de la línea de texto.
+- (?=.*[@$!%*?&]) : Verifica que exista al menos un carácter especial dentro de los corchetes.
+
+##### Bloqueo de usuario
+
+Bloquear el usuario desp del 3er intento incorrecto o hacer algo
 
 #### Carrito de compras (si llegamos a hacerlo genial)
 
@@ -89,12 +115,12 @@ Entidades (BE)
 Acá documentamos los Casos de Uso de login + bitácora
 
 > [!WARNING]
-> El profe Necesita que en el TP haya un RegularExpressionValidation (nos dio una hoja con la explicación).
+> El profe Necesita que en el TP haya un RegularExpressionValidator (nos dio una hoja con la explicación).
 
 ## Usuarios del sistema
 
 Usuario: Lauta
-Contraseña: 1234
+Contraseña: PasswSafe!42
 Rol: Administrador
 
 Usuario: MaxV
