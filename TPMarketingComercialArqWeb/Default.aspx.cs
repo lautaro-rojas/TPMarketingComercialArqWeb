@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BE;
+using BLL;
+using BLL.DIGITOVERIFICADOR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +14,19 @@ namespace TPMarketingComercialArqWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
+            BLL_PRODUCTO p = new BLL_PRODUCTO();
+            BLL_DIGITOVERIFICADOR d = new BLL_DIGITOVERIFICADOR();
 
+            List<BE_PRODUCTO> a = p.ListarProductos();
+
+            foreach (BE_PRODUCTO b in a)
+            {
+                d.CalcularDVHTabla("PRODUCTO");
+                d.CalcularDVHTabla("INSUMO");
+                d.CalcularDVHTabla("PIEZAIMPRESA");
+            }
+            */
         }
     }
 }
