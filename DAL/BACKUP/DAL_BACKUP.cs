@@ -59,22 +59,32 @@ namespace DAL.BACKUP
         */
         public int RealizarRestaurarBackup(string rutaBackup)
         {
-            // Asegúrate de que las rutas de destino sean carpetas donde SQL Server tenga permisos.
-            // Ej: La carpeta DATA por defecto de SQL Server, o una carpeta pública como C:\BasesDeDatos\
-            string rutaMdfDestino = @"C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\DATA\TpArqWeb.mdf";
-            string rutaLdfDestino = @"C:\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\DATA\TpArqWeb_log.ldf";
-
             // 1. Cerrar conexiones activas y poner en modo usuario único
             int res = acceso.Escribir($"ALTER DATABASE [{NombreBD}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE", null, false);
 
-            // 2. Restaurar la base de datos
+            // 2. Restaurar la base de datos leyendo las rutas por defecto configuradas en el propio motor de SQL
             string queryRestore = $@"
                 USE MASTER; 
+
+                -- Obtener las rutas base (carpetas en el servidor que la instancia de SQL usa por defecto)
+                DECLARE @DataPath NVARCHAR(1000) = CAST(SERVERPROPERTY('InstanceDefaultDataPath') AS NVARCHAR(1000));
+                DECLARE @LogPath NVARCHAR(1000) = CAST(SERVERPROPERTY('InstanceDefaultLogPath') AS NVARCHAR(1000));
+
+                -- Construir las rutas de destino absolutas correctas
+                DECLARE @MdfDestino NVARCHAR(2000) = @DataPath + 'TpArqWeb.mdf';
+                DECLARE @LdfDestino NVARCHAR(2000) = @LogPath + 'TpArqWeb_log.ldf';
+
+                -- Armar el comando RESTORE de manera dinámica
+                DECLARE @SQL NVARCHAR(MAX) = '
                 RESTORE DATABASE [{NombreBD}] 
-                FROM DISK = '{rutaBackup}' 
+                FROM DISK = ''{rutaBackup}'' 
                 WITH REPLACE,
-                MOVE 'TpArqWeb' TO '{rutaMdfDestino}',
-                MOVE 'TpArqWeb_log' TO '{rutaLdfDestino}'";
+                MOVE ''TpArqWeb'' TO ''' + @MdfDestino + ''',
+                MOVE ''TpArqWeb_log'' TO ''' + @LdfDestino + '''';
+
+                -- Ejecutar el restore dinámico
+                EXEC sp_executesql @SQL;
+            ";
 
             res = acceso.Escribir(queryRestore, null, false);
 

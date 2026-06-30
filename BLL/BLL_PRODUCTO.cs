@@ -1,5 +1,6 @@
 ﻿using BE;
 using DAL;
+using DAL.DIGITOVERIFICADOR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace BLL
     public class BLL_PRODUCTO
     {
         DAL_PRODUCTO dalproductos = new DAL_PRODUCTO();
+        DAL_DIGITOVERIFICADOR daldigitoverificador = new DAL_DIGITOVERIFICADOR();
 
         public List<BE_PRODUCTO> ListarProductos()
         {
@@ -22,6 +24,7 @@ namespace BLL
             foreach (var item in itemsComprados)
             {
                 dalproductos.DescontarStock(item.Id, item.Cantidad);
+                daldigitoverificador.CalcularDVHTabla("PRODUCTO");
                 /*
                 if (item.TipoProducto == "Insumo")
                 {

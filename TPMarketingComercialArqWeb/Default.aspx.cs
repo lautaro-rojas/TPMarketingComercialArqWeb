@@ -26,6 +26,10 @@ namespace TPMarketingComercialArqWeb
                 d.CalcularDVHTabla("INSUMO");
                 d.CalcularDVHTabla("PIEZAIMPRESA");
             }
+
+            d.CalcularDVVTabla("PRODUCTO");
+            d.CalcularDVVTabla("INSUMO");
+            d.CalcularDVVTabla("PIEZAIMPRESA");
             */
         }
     }
