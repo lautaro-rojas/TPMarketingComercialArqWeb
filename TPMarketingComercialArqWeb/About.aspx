@@ -48,7 +48,7 @@
         color: white;
         border-radius: 12px;
         padding: 36px 40px;
-        margin-bottom: 10px;
+        margin-bottom: 28px;
     }
     .valores h4 { color: #a0c4ff; margin-bottom: 20px; text-align: center; }
     .valores ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
@@ -57,6 +57,32 @@
         border-radius: 20px;
         padding: 8px 20px;
         font-size: 0.95rem;
+    }
+
+    /* NUEVOS ESTILOS PARA LA SECCIÓN DE GEOLOCALIZACIÓN */
+    .map-section {
+        background: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .map-section h4 { color: #0f3460; margin-bottom: 15px; font-weight: 600; }
+    .map-container {
+        position: relative;
+        padding-bottom: 40%; /* Relación de aspecto del mapa */
+        height: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+    .map-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 </style>
 
@@ -111,6 +137,18 @@
             <li>🔬 Innovación constante</li>
             <li>💡 Pasión por la tecnología</li>
         </ul>
+    </div>
+
+    <div class="map-section">
+        <h4>📍 Dónde nos encontramos:</h4>
+        <div class="map-container">
+            <iframe 
+                src="https://maps.google.com/maps?q=UAI%20Lomas%20de%20Zamora,%20Av.%20Hip%C3%B3lito%20Yrigoyen%209940,%20Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
     </div>
 
 </main>
