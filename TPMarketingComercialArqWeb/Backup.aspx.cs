@@ -1,5 +1,6 @@
 ﻿using BE;
 using BE.BITACORAYCAMBIOS;
+using BE.PERMISOS;
 using BLL.BACKUP;
 using BLL.BITACORAYCAMBIOS;
 using System;
@@ -20,11 +21,20 @@ namespace TPMarketingComercialArqWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            var roles = BE_SESION.ObtenerInstancia.Usuario.ListaDePermisos.OfType<BE_ROL>().Select(r => r.Nombre).ToList();
+            if (roles.Contains("Cliente")|| roles.Contains("SinPermisos"))
+            {
+                Response.Redirect("Default.aspx");
+            }
+            /*
+             * Necesito agreagar una validación en la pagina. Tengo un fallo de seguridad que si el usuario se logeo como cliente y por url mete una direccion a la q no debe acceder entra. entonces tengo que agregar una validacion. Podes usar BE_SESION para obtener la lista de permisos de un usuario. Los q no deben acceder a backup son los q tienen el rol Cliente y SinPermisos
+             * */
+
             if (!IsPostBack)
             {
                 bllbitacoraeventos.GuardarBitacoraEvento(new BE_BITACORA_EVENTOS(
                             BE_SESION.ObtenerInstancia.Usuario, DateTime.Now, "Entró a backup"));
-
             }
         }
 

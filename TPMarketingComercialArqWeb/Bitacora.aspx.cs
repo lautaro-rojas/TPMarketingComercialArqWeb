@@ -19,6 +19,12 @@ namespace TPMarketingComercialArqWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var roles = BE_SESION.ObtenerInstancia.Usuario.ListaDePermisos.OfType<BE_ROL>().Select(r => r.Nombre).ToList();
+            if (roles.Contains("Cliente") || roles.Contains("SinPermisos"))
+            {
+                Response.Redirect("Default.aspx");
+            }
+
             if (!IsPostBack)
             {
                 bllbitacoraeventos.GuardarBitacoraEvento(
