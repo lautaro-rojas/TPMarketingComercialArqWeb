@@ -27,9 +27,6 @@ namespace TPMarketingComercialArqWeb
             {
                 Response.Redirect("Default.aspx");
             }
-            /*
-             * Necesito agreagar una validación en la pagina. Tengo un fallo de seguridad que si el usuario se logeo como cliente y por url mete una direccion a la q no debe acceder entra. entonces tengo que agregar una validacion. Podes usar BE_SESION para obtener la lista de permisos de un usuario. Los q no deben acceder a backup son los q tienen el rol Cliente y SinPermisos
-             * */
 
             if (!IsPostBack)
             {
